@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Join Room</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'fontawesome-2/css/all.css' %}">
+</head>
+<body style="padding-top: 20px;">
+  <a href="{% url 'conference:dashboard' %}" style="margin-left:20px; margin-top: 20px;">
+    <i class='fa fa-arrow-left' style=" margin-top: 20px; color:white; font-size:x-large;"></i>
+  </a>
+  <div class="container">
+    <div class="login form">
+      <header>Join Room</header>
+      <form action="{% url 'conference:join_room' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="Enter room ID" name="roomID">
+        <input type="submit" class="button" value="Join">
+        <center>
+          {% if success %}
+          <p style="color: green;"><b>{{ success }}</b></p>
+          {% endif %}
+          {% if error %}
+          <p style="color: red;">{{ error }}</p>
+          {% endif %}
+        </center>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

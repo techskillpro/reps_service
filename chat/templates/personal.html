@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'chat.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-2/css/all.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <section>
+            <aside>
+                <!-- <i class="fas fa-exit" style="background-color: yellow;"></i> -->
+                <h1>
+                    <a href="{% url 'base'%}"><i class="fas fa-arrow-left" style="color: red;"></i></a>
+                    {% if general_unread_count %}
+                        {{general_unread_count}} New Message(s)
+                    {% endif %}
+                    {% if user.userprofileinfo %}
+                        <a href="{% url 'chat:room' group_name=request.user.userprofileinfo.course  group_pk=request.user.userprofileinfo.course.id %}" style="float: right;">Group Chat</a>
+                    {% else %}
+                    {% endif %}
+                </h1>
+                {% if general_unread %}
+                    <div class="participants-div" style="height: 30%;">
+                        <h3>New Messages</h3>
+                        {%for participants in general_unread%}
+                            <a class="participant" href="{% url 'chat:sendpersonalmessage' receiver_pk=participants.sender.id %}">
+                                {% if participants.sender.userprofileinfo.profile_pic %}
+                                    <img src="{{participants.sender.userprofileinfo.profile_pic.url}}" alt="">
+                                {%else%}
+                                    <img src="/media/Images/2.jpg" alt="">
+                                {%endif%}
+                                <p>{{participants.sender.first_name}} {{participants.sender.last_name}}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <div class="participants-div" style="height: 70%;">
+                        <h3>Participants</h3>
+                        <div class="participants-list">
+                            {%for participants in users%}
+                                    <a class="participant" href="{% url 'chat:sendpersonalmessage' receiver_pk=participants.id %}">
+                                        {% if participants.userprofileinfo.profile_pic %}
+                                            <img src="{{participants.userprofileinfo.profile_pic.url}}" alt="">
+                                        {%else%}
+                                        <img src="/media/Images/2.jpg" alt="">
+                                        {%endif%}
+                                        <p>{{participants.first_name}} {{participants.last_name}}</p>
+                                    </a>
+                            {%endfor%}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="participants-div">
+                        <h3>Participants</h3>
+                        <div class="participants-list">
+                            {%for participants in users%}
+                                    <a class="participant" href="{% url 'chat:sendpersonalmessage' receiver_pk=participants.id %}">
+                                        {% if participants.userprofileinfo.profile_pic %}
+                                            <img src="{{participants.userprofileinfo.profile_pic.url}}" alt="">
+                                        {%else%}
+                                            <div class="no-pic"></div>
+                                        {%endif%}
+                                        <p>{{participants.first_name}} {{participants.last_name}}</p>
+                                    </a>
+                            {%endfor%}
+                        </div>
+                    </div>
+                {% endif %}
+            </aside>
+            <main>
+                <h3 style='justify-content: space-between; display:flex; flex-direction: row; padding-left: 2%; padding-right: 2%; border-bottom: 1px solid grey;'>{{receiver.last_name}} {{receiver.first_name}} ({{receiver.username}}).
+                    <a href="{% url 'conference:dashboard' %}"> 
+                        <i style="color:black;" class="fa fa-video"></i>
+                    </a>
+                </h3>
+
+                
+
+                <div class="messages-container">
+                    {% comment %} {%if messages%} {% endcomment %}
+                        {% comment %} {% for message in messages%} {% endcomment %}
+                            {% comment %} {%if message.sender == room.admin.admin%}
+                                {% if request.user == room.admin.admin%}
+                                <div class="msg-div" id="my-msg-div">
+                                    <div class="messages admin-msg" id="my-msg">
+                                        <span class="sender">{{message.sender.first_name}} {{message.sender.last_name}}</span><p></p>
+                                        <p class="msg">{{message.message}}</p>
+                                        {%if message.message_image %}
+                                            <img src="{{message.message_image.url}}" width="250px">
+                                            <a href="{{message.message_image.url}}" download><img src="{{message.message_image.url}}" alt="" style="margin-top: 5px; margin-bottom: 5px;"></a><p></p>
+                                        {%endif%}
+                                        {%if message.message_file%}
+                                            <a href="{{message.message_file.url}}" download style="margin-bottom: 5px; color: white;"><i class="fas fa-file-download"></i><span>{{message.message_file}}</span></a><p></p>
+                                        {%endif%}
+                                        {%if request.user == room.admin.admin or message.sender == request.user%}
+                                        <a href="{% url 'chat:delete_message' room_id=room.id message_id=message.id%}"><i class="fas fa-trash-alt"></i></a>
+                                        {%endif%}
+                                        {%if message.sender == request.user%}
+                                        <a href="{% url 'chat:edit_message' room_id=room.id message_id=message.id%}"><i class="fas fa-edit"></i></a>
+                                        {% endif %} <p></p>
+                                        <span class="msg-time">{{message.created_at}}</span><p></p>
+                                        
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="msg-div" id="other-msg-div">
+                                    <div class="messages admin-msg" id="other-msg">
+                                        <span class="sender">Class Teacher</span><p></p>
+                                        <p class="msg">{{message.message}}</p>
+
+                                        {%if message.message_image%}
+                                        <a href="{{message.message_image.url}}" download><img src="{{message.message_image.url}}" alt="" style="margin-top: 5px; margin-bottom: 5px;"></a><p></p>
+                                        {%endif%}
+                                        {%if message.message_file%}
+                                            <a href="{{message.message_file.url}}" download style="margin-bottom: 5px; color: white;"><i class="fas fa-file-download"></i><span>{{message.message_file}}</span></a><p></p>
+                                        {%endif%}
+                                        {%if request.user == room.admin.admin or message.sender == request.user%}
+                                        <a href="{% url 'chat:delete_message' room_id=room.id message_id=message.id%}"><i class="fas fa-trash-alt"></i></a>
+                                        {%endif%}
+                                        {%if message.sender == request.user%}
+                                        <a href="{% url 'chat:edit_message' room_id=room.id message_id=message.id%}"><i class="fas fa-edit"></i></a>
+                                        {% endif %}<p></p>
+                                        <span class="msg-time">{{message.created_at}}</span><p></p>
+                                        
+                                    </div>
+                                </div>
+                                {%endif%}    
+                            {% endcomment %}
+                            {% comment %} {%else%} {% endcomment %}
+                            {% for message in message %}
+                                {% if message.sender == request.user %}
+                                    <div class="msg-div" id="my-msg-div">
+                                        <div class="messages" id="my-msg">
+                                            <span class="sender">You</span><p></p>
+                                            <p class="msg">{{message.message}}</p>
+                                            {%if message.message_image%}
+                                            {%if message.message_image%}
+                                                <img src="{{message.message_image.url}}" width="250px">
+                                                <a href="{{message.message_image.url}}" download><img src="{{message.message_image.url}}" alt="" style="margin-top: 5px; margin-bottom: 5px;"></a><p></p>
+                                            {%endif%}                                        {%endif%}
+                                            {%if message.message_file%}
+                                                <a href="{{message.message_file.url}}" download style="margin-bottom: 5px; color: white;"><i class="fas fa-file-download"></i><span>{{message.message_file}}</span></a><p></p>
+                                            {%endif%}
+                                            {%if message.sender == request.user%}
+                                                <a onclick="alert('Confrim to delete.')" href="{% url 'chat:delete_messagess' message_id=message.id%}"><i class="fas fa-trash-alt"></i></a>
+                                                {%endif%}
+                                                {%if message.sender == request.user%}
+                                                <a href="{% url 'chat:edit_messagess' message_id=message.id%}"><i class="fas fa-edit"></i></a>
+                                                {% endif %}<p></p>
+                                            <span class="msg-time">{{message.created_at}}</span><p></p>
+                                            
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if message.sender != request.user %}
+                                    <div class="msg-div" id="other-msg-div">
+                                        <div class="messages" id="other-msg">
+                                            <span class="sender">{{message.sender.first_name}} {{message.sender.last_name}}</span><p></p>
+                                            <p class="msg">{{message.message}}</p>
+                                            {%if message.message_image%}
+                                                <img src="{{message.message_image.url}}" width="250px">
+                                                <a href="{{message.message_image.url}}" download><img src="{{message.message_image.url}}" alt="" style="margin-top: 5px; margin-bottom: 5px;"></a><p></p>
+                                            {%endif%}
+                                            {%if message.message_file%}
+                                            <a href="{{message.message_file.url}}" download style="margin-bottom: 5px; color: white;"><i class="fas fa-file-download"></i><span>{{message.message_file}}</span></a><p></p>
+                                            {%endif%}
+                                            {%if message.sender == request.user%}
+                                                <a onclick="alert('Confrim to delete.')" href="{% url 'chat:delete_messagess' message_id=message.id%}"><i class="fas fa-trash-alt"></i></a>
+                                            {%endif%}
+                                            {%if message.sender == request.user%}
+                                            <a href="{% url 'chat:edit_messagess' message_id=message.id%}"><i class="fas fa-edit"></i></a>
+                                            {% endif %}<p></p>
+                                            <span class="msg-time">{{message.created_at}}</span><p></p>
+                                        </div>
+                                    </div>
+                                {%endif%}
+                            {%endfor%}
+                    {% comment %} {%else%}
+                        <h1>No messages yet, be the first to initiate a conversation</h1>
+                    {%endif%} {% endcomment %}
+                </div>
+                {% block form%}
+                <form class="input" method="POST">
+                    {% csrf_token%}
+                    <div class="input-div">
+                        <div class="file-uplaod">
+                            <input type="file" name="message_file" id="file-input" class="file-input">
+                            <label for="file-input" id="file-label"><i class="fas fa-file-upload"></i></label>
+                        </div>
+                        <input type="text" name="message" placeholder="Message..." class="text-box">
+                        <div class="file-uplaod">
+                            <input type="file" name="message_image" class="file-input" id="image-input" accept="image/*">
+                            <label for="file-input" id="file-label"><i class="fas fa-image"></i></label>
+                        </div>
+                    </div>
+                    <!-- <i class="fas fa file"></i> -->
+                    <button type="submit"><i class="fas fa-location-arrow"></i></button>
+                </form>
+                {%endblock%}
+            </main>
+        </section>
+    {% else %}
+    <h1 style="margin-top: 5%; margin-left: 2%;">Login to access this service <a href="{% url 'user_login' %}">Click here!!!</a></h1>
+    {% endif %}
+    <script>
+        window.onload = function(){
+            var element = document.querySelector('.rightss');
+            var elements = document.querySelector('.messages-container');
+            {% comment %} var elements = document.querySelector('main'); {% endcomment %}
+            elements.scrollTo(0, elements.scrollHeight);
+        }
+    </script>
+</body>
+</html>
+{% comment %} {% for content in message %}
+{% if content.sender != request.user %}
+        <div class="mes">
+            <p class="para">
+                {{content.sender.username}}
+            </p>
+            {{content.message}}<br>
+            <p class="para">{{content.datetime}}</p>
+        </div>
+{% endif %}
+{% if content.sender == request.user %}
+        <div class="mesa">
+            <p class="para">
+                You
+            </p>
+            <p class="par">{{content.message}}</p>
+            <p class="para">{{content.datetime}}</p>
+        </div>
+{% endif %}
+{% endfor %} {% endcomment %}

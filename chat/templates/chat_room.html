@@ -1,0 +1,19 @@
+{%extends 'chat_base.html'%}
+{% block form%}
+<form class="input" method="POST">
+    {% csrf_token%}
+    <div class="input-div">
+        <div class="file-uplaod">
+            <input type="file" name="message_file" id="file-input" class="file-input">
+            <label for="file-input" id="file-label"><i class="fas fa-file-upload"></i></label>
+        </div>
+        <input type="text" name="message" placeholder="Message..." class="text-box" required="not required>
+        <div class="file-uplaod">
+            <input type="file" name="message_image" class="file-input" id="image-input" accept="image/*">
+            <label for="file-input" id="file-label"><i class="fas fa-image"></i></label>
+        </div>
+    </div>
+    <!-- <i class="fas fa file"></i> -->
+    <button type="submit"><i class="fas fa-location-arrow"></i></button>
+</form>
+{%endblock%}

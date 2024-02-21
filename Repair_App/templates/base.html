@@ -1,0 +1,492 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  
+    <meta charset="utf-8">
+    <title>ServicePoint</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="O-SERVE Repair and service app">
+    <meta name="author" content="OlutechIT Resource">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png'%}">
+
+    <link href="{%static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"> 
+    <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/owl.carousel.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/owl.theme.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/venobox.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
+</head>
+
+<body>
+  {% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{message}}');
+        </script>                              
+    {% endfor %}
+  {% endif %}
+    {% csrf_token %}
+    <!--  HEADER STYLE  03-->
+    <header class="main-header-2 clearfix" data-sticky_header="true">
+      <section class="header-wrapper navgiation-wrapper">
+        <div class="main-top-header hidden-sm hidden-xs clearfix">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 text-left ">
+                <div class="top-bar-link">
+                  <strong>HOT LINE</strong>
+                  : +234-802-247-9485, +234-902-567-5945, +234-812-744-7075
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+
+                <div class="top-bar-link">
+                  {% if request.user.is_authenticated %}
+                    <a href="{% url 'user_logout' %}">Logout</a>
+                  {% else %} 
+                    <a href="{% url 'user_login' %}">Login</a>
+                    <span class="separator-line"></span>
+                    <a href="{% url 'user_register' %}">Subscribe</a>
+                  {% endif %}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-top">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-12 col-xs-12 header-col-logo">
+                <div class="header-logo logo">
+                  <a href="{% url 'base' %}">
+                    <h1>
+                      ServicePoint<br><span style="font-size: xx-small;">...IT Performance in excellence</span>
+                    </h1>
+                    {% comment %} <img src="{% static 'images/logo.png'%}" alt="Logo"> {% endcomment %}
+                  </a>
+                </div>
+                <!-- end .logo  -->
+              </div>
+              <!-- end .col-md-3  -->
+
+              <div class="col-md-8 col-sm-12 hidden-xs">
+                <div class="row">
+
+                  <div class="col-md-4 col-sm-4">
+                    <div class="header-icon-box">
+                      <div class="icon-container">
+                        <i class="fa fa-building-o"></i>
+                      </div>
+                      <div class="text">
+                        <span class="head-heading">OFFICE ADDRESS</span>
+                        <span class="head-content">
+                          Suite 6, ALong Railway Line, Off Unity Road, Ilorin. Kwara State
+                        </span>
+                      </div>
+                    </div>
+                    <!-- end .repair-icon-box  -->
+                  </div>
+                  <!-- end .col-md-4  -->
+
+                  <div class="col-md-4 col-sm-4">
+                    <div class="header-icon-box">
+                      <div class="icon-container">
+                        <i class="fa fa-calendar-check-o"></i>
+                      </div>
+                      <div class="text">
+                        <span class="head-heading">WORKING HOUR</span>
+                        <span class="head-content">
+                          Monday-Friday 9:00AM-6:00PM
+                        </span>
+                      </div>
+                    </div>
+                    <!-- end .header-icon-box  -->
+                  </div>
+                  <!-- end .col-md-4  -->
+
+                  <div class="col-md-4 col-sm-4 clearfix">
+                    <a class="btn btn-theme btn-square btn-header-cta margin-top-36 pull-right" href="{% url 'book-appointment' %}" title="Repair Gadgets here">REPAIR HERE.</a>
+                  </div>
+                  <!-- end .col-md-4  -->
+
+                </div>
+                <!-- end .row  -->
+              </div>
+              <!-- end .col-md-8  -->
+
+            </div>
+            <!-- end .row  -->
+          </div>
+          <!-- end .container  -->
+        </div>
+        <!-- end header-top  -->
+
+        <div class="navbar navbar-default">
+          <div class="container clearfix">
+            <div class="navbar-collapse collapse pull-left">
+              <ul class="nav navbar-nav">
+                <li class="drop">
+                  <a href="{% url 'base' %}" title="Home">Home</a>
+                </li>
+                
+                {% if user.is_authenticated %}
+                {% else %}
+                  <li>
+                    <a href="{% url 'about' %}" title="About Us">About Us</a>
+                  </li>
+                  <li >
+                    <a href="{% url 'services' %}" title="Get Access To Our Services">Services</a>
+                  <li>
+                {% endif %}
+                  
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'payment' %}" title="Subscribe To Repair Gadget For Free...">Repair For Free</a>
+                    {% else %}
+                        <a href="{% url 'contact' %}" title="Contact Us Now.">Contact</a>
+                    {% endif %}
+                </li>
+                {% if user.is_authenticated %}
+                <li class="drop">
+                  <a href="#">Action</a>
+                    <ul class="drop-down level3">
+                      <li>
+                          <a href="{% url 'complains' %}" title="Complain">Complain</a>                    
+                      </li>
+                      <li>
+                        <a href="{% url "swap" %}" title="Swap Here">Swap Deals</a>
+                      </li>
+                      <li>
+                        <a href="" title="Purchase Items here">Store</a>
+                      </li>
+                      </ul>
+                  </li>
+                {% endif %}
+                <li>
+                  <a href="{% url "consultancy" %}" title="Consult Us Now.">Consultancy</a>
+                </li>
+                {% if user.is_authenticated %}
+                  <li class="drop">
+                    <a href="#">Chat</a>
+                    <ul class="drop-down level3">
+                      <li>
+                        <a href="{% url 'chat:chat_room' %}" title="Chat With Other Users.">Chat Hub</a>
+                      </li>
+                      <li>
+                        <a href="{% url 'conference:dashboard' %}" title="Video Chat Hub.">Video Chat</a>
+                      </li>
+                    </ul>                    
+                  </li>
+
+                  <li>
+                    <a href="{% url 'user_logout' %}" title="Log Out.">Logout</a>
+                  </li>
+                {% else %}
+                    <li class="drop">
+                        <a href="#">REPAIR FOR FREE</a>
+                        <ul class="drop-down level3">
+                            <li>
+                            <a href="{% url 'user_login' %}" title="Sign in">Sign In</a>
+                            </li>
+                            <li>
+                            <a href="{% url 'user_register' %}" title="Subscribe Here">Subscribe</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}              
+          </ul>
+              <!-- end .nav .navbar-nav  -->
+            </div>
+            <div class="navbar-header pull-right">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <div class="navbar-contact">
+
+                <div class="top-bar-social margin-top-16">
+                  <a href="#">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  {% comment %} <a href="#">
+                    <i class="fa fa-pinterest"></i>
+                  </a> {% endcomment %}
+                  <a href="#">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                  {% comment %} <a href="#">
+                    <i class="fa fa-youtube"></i>
+                  </a> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end .container  -->
+        </div>
+        <!-- end .navbar .navbar-default  -->
+
+      </section>
+    </header>
+    <!-- end main-header  -->
+    
+    {% block content %}
+        
+    {% endblock content %}
+        
+    <!-- START FOOTER  -->
+    <footer class="section-pure-black-bg">
+      <section class="footer-widget-area footer-widget-area-bg section-custom-bg" data-bg_color="#111111" data-bg_opacity="0.9">
+          <div class="container">
+          <div class="row">
+              <div class="col-md-4 col-sm-12 col-xs-12">
+              <div class="footer-widget">
+                  <div class="sidebar-widget-wrapper">
+                  <div class="textwidget about-footer">
+                      <div class="footer-widget-header clearfix">
+                      <h3>ABOUT US</h3>
+                      </div>
+                      <!--  end .footer-widget-header -->
+                      <div class="footer-about-text">
+                      ServicePoint brings you flexible repair services to your closet.
+                      </div>
+
+                      <div class="social-icons margin-top-24">
+
+                      <a href="#">
+                          <i class="fa fa-facebook"></i>
+                      </a>
+
+                      <a href="#">
+                          <i class="fa fa-twitter"></i>
+                      </a>
+
+                      {% comment %} <a href="#">
+                          <i class="fa fa-pinterest-p"></i>
+                      </a> {% endcomment %}
+
+                      <a href="#">
+                          <i class="fa fa-instagram"></i>
+                      </a>
+
+                      <a href="#">
+                          <i class="fa fa-linkedin"></i>
+                      </a>
+
+                      </div>
+
+                  </div>
+
+                  </div>
+                  <!-- end .footer-widget-wrapper  -->
+
+              </div>
+              <!--  end .footer-widget  -->
+
+              </div>
+              <!--  end .col-md-4 col-sm-12 -->
+
+              <div class="col-md-4 col-sm-6 col-xs-12">
+
+              <div class="footer-widget">
+
+                  <div class="sidebar-widget-wrapper">
+
+                  <div class="footer-widget-header clearfix">
+                      <h3>CONTACT US</h3>
+                  </div>
+                  <!--  end .footer-widget-header -->
+
+
+                  <div class="textwidget">
+
+                      <i class="fa fa-envelope-o fa-contact"></i>
+                      <p>
+                      <a href="#">olutechitconsult@gmail.com</a><br>
+                      {% comment %} <a href="#">helpmenow@rgeeks.com</a> {% endcomment %}
+                      </p>
+
+                      {% comment %} <i class="fa fa-location-arrow fa-contact"></i>
+                      <p>Suite6, Railway Line<br>Off Unity Road, Ilorin. Kwara State</p> {% endcomment %}
+
+                      <i class="fa fa-phone fa-contact"></i>
+                      <p>Office:&nbsp; (+234) 8022 479 485</p>
+
+                  </div>
+
+                  </div>
+                  <!-- end .footer-widget-wrapper  -->
+
+              </div>
+              <!--  end .footer-widget  -->
+
+              </div>
+              <!--  end .col-md-4 col-sm-12 -->
+
+              <div class="col-md-4 col-sm-6 col-xs-12">
+
+              <div class="footer-widget">
+
+                  <div class="sidebar-widget-wrapper">
+
+                  <div class="footer-widget-header clearfix">
+                      <h3>OPENING - CLOSING HOURS</h3>
+                  </div>
+                  <!--  end .footer-widget-header -->
+
+                  <div class="textwidget">
+                      <ul class="opening-shedule">
+                      <li class="clearfix">
+                          <span>
+                          Mon - Sat :
+                          </span>
+                          <div class="pull-right">
+                          9:00 AM - 6:00 PM</div>
+                      </li>
+                      {% comment %} <li>
+                          <span>
+                          Wed - Thurs :
+                          </span>
+                          <div class="pull-right">
+                          9.00 AM - 6.00 PM</div>
+                      </li>
+                      <li>
+                          <span>
+                          Friday :</span>
+                          <div class="pull-right">
+                          9.00 AM - 6.00 PM</div>
+                      </li>
+                      <li>
+                          <span>
+                          Sunday :</span>
+                          <div class="pull-right">
+                          Closed</div>
+                      </li> {% endcomment %}
+                      </ul>
+
+                  </div>
+
+
+                  </div>
+                  <!-- end .footer-widget-wrapper  -->
+
+              </div>
+              <!--  end .footer-widget  -->
+
+              </div>
+              <!--  end .col-md-4 col-sm-12 -->
+
+          </div>
+          <!-- end row  -->
+
+          </div>
+          <!-- end .container  -->
+
+      </section>
+      <!--  end .footer-widget-area  -->
+
+      <!--FOOTER CONTENT  -->
+
+      <section class="footer-contents">
+
+          <div class="container">
+
+          <div class="row clearfix">
+              <div class="col-md-6 col-sm-12 clearfix">
+              <p class="copyright-text">
+                  Copyright © 2024. All right reserved by
+                  <a href="https://myskilltech.com" target="_blank" class="color-primary">OlutechICT Resource</a>
+              </p>
+              </div>
+
+              <div class="col-md-6 col-sm-12 text-right clearfix">
+              <ul class="footer-link">
+                  <li>
+                  <a href="#">Discounts</a>
+                  </li>
+                  <li>
+                  <a href="#">Careers</a>
+                  </li>
+                  <li>
+                  <a href="#">Terms</a>
+                  </li>
+                  <li>
+                  <a href="#">Privacy</a>
+                  </li>
+              </ul>
+              </div>
+
+          </div>
+
+          </div>
+
+      </section>
+
+  </footer>
+
+
+    <!-- BACK TO TOP BUTTON  -->
+
+    <a id="backTop">Back To Top</a>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/wow.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backTop.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/waypoints-sticky.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/venobox.min.js' %}"></script>
+    <script src="{% static 'js/custom-scripts.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    {% block link %}{% endblock link %}
+
+    <script>
+        $(document).ready(function () {
+            //Gets the csrf token and prepares it for posting the long. and lat to the backend
+            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            {% comment %} console.log(csrftoken) {% endcomment %}
+                        
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+            
+                        {% comment %} console.log(latitude) {% endcomment %}
+                        {% comment %} console.log(longitude) {% endcomment %}
+
+                        //Posts the long, lat and csrf token to the backend to be saved to each authenticated user
+                        $.ajax({
+                            type: 'POST',
+                            url: '/update_location/',
+                            headers: { 'X-CSRFToken': csrftoken },
+                            data: { latitude: latitude, longitude: longitude },
+                            success: function (response) {
+                            console.log('Location updated successfully');
+                            },
+                            error: function (error) {
+                            console.error('Error updating location:', error);
+                            }
+                        });
+                })
+            }
+            else{
+                console.error('Geolocation is not supported by this browser.');
+            }
+        });            
+    </script> 
+</body>
+</html>
+  

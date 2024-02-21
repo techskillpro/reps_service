@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <!--  PAGE HEADING -->
+
+    <section class="page-header">
+
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-sm-12 text-center">
+            <h3>
+              ANY COMPLAINS??
+            </h3>
+            <p class="page-breadcrumb">
+              <a href="{% url 'base' %}">Home</a>
+              / Complains
+            </p>
+          </div>
+        </div>
+        <!-- end .row  -->
+      </div>
+      <!-- end .container  -->
+    </section>
+    <!-- end .page-header  -->
+
+    
+    <section class="section-content-block section-contact-block">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-sm-6 wow fadeInLeft">
+
+            <div class="contact-form-block">
+
+              <h2 class="contact-title">Say your mind to us...</h2>
+
+              <form method="post" id="contact-form">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input required type="text" class="form-control" id="user_name" name="name" placeholder="Name" data-msg="Please Enter Your Full Name">
+                </div>
+
+                <div class="form-group">
+                  <input required type="email" class="form-control" id="user_email" name="email" placeholder="Email" data-msg="Please Enter Your Valid Email">
+                </div>
+                <div class="form-group">
+                  <input required type="text" class="form-control" id="email_subject" name="subject" placeholder="Subject" data-msg="Please Write Your Complain Subject">
+                </div>
+
+                <div class="form-group">
+                  <textarea required class="form-control" rows="5" name="message" id="email_message" placeholder="Message" data-msg="Please Write Your Complains"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-custom">Send Now</button>
+                </div>
+
+              </form>
+
+            </div>
+            <!-- end .contact-form-block  -->
+
+          </div>
+          <!--  end col-sm-6  -->
+
+
+        </div>
+        <!-- end row  -->
+
+      </div>
+      <!--  end .container -->
+
+    </section>
+    <!-- end .section-content-block  -->
+
+    <!--  MAIN CONTENT  -->
+    <section class="section-content-block section-contact-block">
+
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-md-12">
+            <h2 class="contact-title">Contact us</h2>
+          </div>
+
+          <div class="col-md-3">
+
+            <ul class="contact-info">
+              <li>
+                <span class="icon-container">
+                  <i class="fa fa-home"></i>
+                </span>
+                <address>Suite 6, Railway Line, Off Unity Road, Ilorin. Kwara State</address>
+              </li>
+            </ul>
+
+          </div>
+
+          <div class="col-md-3">
+
+            <ul class="contact-info">
+
+              <li>
+                <span class="icon-container">
+                  <i class="fa fa-phone"></i>
+                </span>
+                <address>
+                  <a href="#">+234-803-2100-978</a>
+                </address>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <div class="col-md-3">
+            <ul class="contact-info">
+              <li>
+                <span class="icon-container">
+                  <i class="fa fa-envelope"></i>
+                </span>
+                <address>
+                  <a href="mailto:">olutechitconsult@gmail.com</a>
+                </address>
+              </li>
+            </ul>
+
+          </div>
+
+          <div class="col-md-3">
+
+            <ul class="contact-info">
+              <li>
+                <span class="icon-container">
+                  <i class="fa fa-globe"></i>
+                </span>
+                <address>
+                  <a href="#">www.myskilltech.com</a>
+                </address>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+{% endblock content %}

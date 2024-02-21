@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'chat.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-2/css/all.css' %}">
+    <title>Document</title>
+    <style>
+        /* .participants-div{
+            /* height: fit-content !important; */
+            height: 50%;
+        } */
+        aside{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <section>
+            <aside>
+                <!-- <i class="fas fa-exit" style="background-color: yellow;"></i> -->
+                <h1>
+                    <a href="{% url 'base'%}"><i class="fas fa-arrow-left" style="color: red;"></i></a>
+                    {% if unread_count %}
+                        {{unread_count}} New Message(s)
+                    {% endif %}
+                    {% if user.userprofileinfo %}
+                        <a href="{% url 'chat:room' group_name=request.user.userprofileinfo.course  group_pk=request.user.userprofileinfo.course.id %}" style="float: right;">Group Chat</a>
+                    {% else %}
+                    {% endif %}
+
+                </h1>
+                {% if unread %}
+                    <div class="participants-div" style="height: 30%;">
+                        <h3>New Messages</h3>
+                        {%for participants in unread%}
+                            <a class="participant" href="{% url 'chat:sendpersonalmessage' receiver_pk=participants.sender.id %}">
+                                {% if participants.sender.userprofileinfo.profile_pic %}
+                                    <img src="{{participants.sender.userprofileinfo.profile_pic.url}}" alt="">
+                                {%else%}
+                                    <div class="no-pic"></div>
+                                {%endif%}
+                                <p>{{participants.sender.first_name}} {{participants.sender.last_name}}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <div class="participants-div" style="height: 70%;">
+                        <h3>Participants</h3>
+                        <div class="participants-list">
+                            {%for participants in users%}
+                                    <a class="participant" href="{% url 'chat:sendpersonalmessage' receiver_pk=participants.id %}">
+                                        {% if participants.userprofileinfo.profile_pic %}
+                                            <img src="{{participants.userprofileinfo.profile_pic.url}}" alt="">
+                                        {%else%}
+                                        <div class="no-pic"></div>
+                                        {%endif%}
+                                        <p>{{participants.first_name}} {{participants.last_name}}</p>
+                                    </a>
+                            {%endfor%}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="participants-div">
+                        <h3>Participants</h3>
+                        <div class="participants-list">
+                            {%for participants in users %}
+                                    <a class="participant" href="{% url 'chat:sendpersonalmessage' receiver_pk=participants.id %}">
+                                        {% if participants.userprofileinfo.profile_pic %}
+                                            <img src="{{participants.userprofileinfo.profile_pic.url}}" alt="">
+                                        {%else%}
+                                        <div class="no-pic"></div>
+                                        {%endif%}
+                                        <p>{{participants.first_name}} {{participants.last_name}} ({{participants.username}})</p>
+                                    </a>
+                            {%endfor%}
+                        </div>
+                    </div>
+                {% endif %}
+            </aside>
+        </section>
+    {% else %}
+        <h1 style="margin-top: 5%; margin-left: 2%;">Login to access this service <a href="{% url 'user_login' %}">Click here!!!</a></h1>
+    {% endif %}
+</body>
+</html>

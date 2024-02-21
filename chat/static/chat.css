@@ -1,0 +1,241 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: montserrat;
+
+}
+::-webkit-scrollbar{
+    width: 7px;
+    /* height: 2px; */
+}
+::-webkit-scrollbar-track{
+    background-color: rgb(255, 255, 255);
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(8, 0, 98);
+    border-radius: 10px;
+    /* height: 2px; */
+}
+@font-face {
+    font-family: montserrat;
+    src: url(fonts/montserrat.ttf);
+}
+a{
+    text-decoration: none;
+}
+body,html{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+section{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: ; */
+    align-items: center;
+    gap: 2%;
+    background-image:linear-gradient(45deg, #0021f7, #fb25fe );
+}
+main, aside{
+    height: 100%;
+    border-radius: 20px;
+    padding: 10px;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    /* border: 4px solid white; */
+
+}
+main{
+    width: 70%;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    /* border: 4px solid rgb(60, 255, 0); */
+    padding: 0 !important;
+
+}
+main h3{
+    width: 100%;
+    height: 30px;
+    padding: 10px;
+    color: rgb(0, 0, 107);
+    /* box-shadow: 0px 3px 5px rgba(249, 0, 183, 0.71); */
+    padding-bottom: 26px;
+    
+}
+aside{
+    width: 30%;
+}
+.participants-div{
+    height: 90%;
+    /* border: 2px solid red; */
+}
+.participants-list{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* border: 2px solid black; */
+    max-height: 80%;
+    /* width: 20%; */
+}
+.participants-div h3{
+    margin-top: 40px;
+    padding-left: 5px;
+}
+.participant{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(4, 4, 214);
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 2px;
+    color: white;
+}
+.participant img{
+    width: 40px;
+    height: 40px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+.no-pic{
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 50%;
+
+}
+.messages-container{
+    width: 100%;
+    height: 86%;
+    /* background-color: crimson; */
+    overflow-y: scroll;
+    padding: 10px;
+}
+.input{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    width: 100%;
+    height: 7%;
+    margin: 0;
+    padding: 0;
+    /* border: 2px solid blue; */
+}
+.input-div{
+    width: 90%;
+    background-color: blue;
+    border-radius: 18px;
+    /* padding-left: 10px; */
+    height: 32px;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    flex-direction: row;
+}
+.file-upload{
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+.file-input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    /* font-size: 20px; */
+    opacity: 0;
+}
+#file-label{
+    /* background-color: rgb(220, 20, 183); */
+    color: white;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+.text-box{
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 90%;
+    outline: none;
+    height: 100%;
+}
+.text-box::placeholder{
+    color: white;
+}
+.input button{
+    padding: 6px;
+    padding-right: 8px;
+    border: 2px solid palevioletred;
+    background-color: rgb(4, 4, 214);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.msg-div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+#my-msg-div{
+    justify-content: flex-end;
+}
+#other-msg-div{
+    justify-content: flex-start;
+}
+.messages{
+    background-color: rgb(220, 20, 183);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 50%;
+    min-width: 40%;
+    color: rgb(255, 255, 255);
+
+}
+#my-msg{
+    border-bottom-left-radius: 10px;
+    background-color: rgb(12, 4, 248);
+}
+#other-msg{
+    border-bottom-right-radius: 10px;
+    /* text-align: right; */
+}
+.admin-msg{
+    background-color: green !important;
+}
+.msg{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    word-break: break-all;
+}
+.messages span{
+    font-size: 12px;
+}
+i{
+    color: white;
+}
+a{
+    text-decoration: none;
+}
+.msg-div img{
+    max-width: 350px;
+    max-height: 350px;
+    /* opacity: 0; */
+}
+

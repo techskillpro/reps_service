@@ -1,0 +1,44 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Make Payment</title>
+      <link rel="stylesheet" href="{% static 'css/login.css' %}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+   </head>
+   <body>
+      <div class="login-form">
+         <div class="text">
+            Subscribe To Enjoy.<br>
+            <p style="font-size:x-small;">To Access Our Free Gadget Repairs.</p>
+         </div>
+         <form method="post">
+            {% csrf_token %}
+            <div class="field">
+               <div class="fas fa-envelope"></div>
+               <input name="email" type="email" required placeholder="Email Address">
+            </div>
+            {% comment %} <div class="field">
+                <div class="fas fa-money-bill"></div>
+                <input name="amount" type="number" placeholder="Amount">
+            </div> {% endcomment %}
+            <div class="field">
+               <div class="fas fa-memory"></div>
+               <input name="text" type="amount" required placeholder="Payment Reason">
+           </div>
+           <div class="field" style='color:white; display: none;'>
+               {% comment %} <div class="fas fa-memory"></div> {% endcomment %}
+               {% bootstrap_form form %}
+               {% comment %} <input name="text" type="amount" placeholder="Payment Reason"> {% endcomment %}
+            </div>
+
+            <button type="submit">PAY</button>
+         </form>
+      </div>
+   </body>
+</html>
+
+
+

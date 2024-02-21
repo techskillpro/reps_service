@@ -1,0 +1,82 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <title>Register</title>
+</head>
+<body class="container">
+    {% if messages %}
+        <script>
+            alert(
+                '{{messages}}'
+                );
+        </script>
+    {% endif %}
+
+    <form class="text-center mt-4" method="post">
+        {% csrf_token %}
+        {{Userform}}
+        {{Customerform}}
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html> -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Subscribe || </title>
+      <link rel="stylesheet" href="{% static 'css/login.css' %}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+      <style>
+        .field{
+            height: 40px;
+            margin-bottom: 10px !important;
+        }
+      </style>
+   </head>
+   <body style="padding-top: 5%">
+      <div class="login-form">
+         <div class="text">
+            SUBSCRIBE NOW!
+         </div>
+         <form method="post">
+            {% csrf_token %}
+            
+            {% for form in Userform %}
+                <p id="pp" style="color: red !important;">
+                    {{form.errors}}
+                </p>
+                <div class="field">
+                    {{form}}
+                </div>
+            {% endfor %}
+
+            {% for form in Customerform %}
+                <div class="field">
+                    {{form}}                
+                </div>
+            {% endfor %}
+            <!-- <div class="field">
+               <div class="fas fa-envelope"></div>
+               <input name="email" type="email" placeholder="Email Address">
+            <div class="field">
+               <div class="fas fa-lock"></div>
+               <input name="password" type="password" placeholder="Password">
+            </div> -->
+            <button type="submit">Subscribe</button>
+            <div class="link">
+               Don't have an account yet?
+               <a href="{% url 'user_login' %}">Signin now</a><br><br>
+               <a href="{% url 'base' %}">Return Home</a>
+            </div>
+         </form>
+      </div>
+   </body>
+</html>
